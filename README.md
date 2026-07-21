@@ -2,68 +2,106 @@
 
 > **A community memory layer that keeps care, skills, and trust moving.**
 
-Flow Circle is for the help that already happens between people: sharing a room, fixing a bike, reviewing a draft, cooking an extra plate, listening after midnight, or making space for someone new.
+Flow Circle is a community tool for the help that already happens between people: sharing a room, fixing a bike, reviewing a draft, cooking an extra plate, listening after midnight, or making space for someone new.
 
-It gives these moments a gentle structure without turning relationships into a marketplace, a leaderboard, or an obligation to help everyone.
+Most of these exchanges happen in group chats and in-between moments. They matter, but they are difficult to see later. Flow Circle gives them a gentle structure without turning relationships into a marketplace, a leaderboard, or a promise to serve everyone.
 
-## Devpost preview
+## The idea
 
-- **English static interactive demo:** [flow-circle-demo.helloworld-zoey.chatgpt.site/demo.html](https://flow-circle-demo.helloworld-zoey.chatgpt.site/demo.html)
-- **Project presentation:** [flow-circle-demo.helloworld-zoey.chatgpt.site](https://flow-circle-demo.helloworld-zoey.chatgpt.site/)
+The number is a shadow. The relationship is real.
 
-The English demo is a safe, static walkthrough for hackathon reviewers. It has no accounts, backend, or data writes.
+Flow Circle helps a community remember what is already moving through it. A person can ask for help, offer what they can, record a completed exchange, or write a short story of appreciation. Each action has a different meaning, so the product keeps them separate instead of flattening everything into points.
 
-## Run this repository
-
-```bash
-npm install
-npm run dev
-```
-
-Open the local URL printed by Vite. The presentation is available at `/`; the interactive English product demo is at `/demo.html`.
-
-## What's in this repository
-
-This is a complete, runnable static-site codebase for the Devpost submission:
-
-- `index.html`, `styles.css`, and `script.js` — the project presentation page;
-- `public/demo.html`, `public/demo.css`, and `public/demo.js` — the interactive English Flow Circle demo;
-- `package.json` and `vite.config.js` — the Vite development and build setup;
-- `screenshots/` — seven captures of the English interactive demo.
-
-No backend, credentials, or real community data are included here.
-
-## Actual runnable product
-
-The actual working product is currently in Chinese:
-
-- **Live app:** [liudong-circle-demo.helloworld-zoey.chatgpt.site](https://liudong-circle-demo.helloworld-zoey.chatgpt.site/)
-- **Source of truth:** [Ciaoye/community-currency — main](https://github.com/Ciaoye/community-currency/tree/main)
-
-That product contains the application flows and persistence work. This public repository contains the self-contained English static site used for the hackathon, rather than a copy of the Chinese backend.
+The goal is not to make every act of care measurable. The goal is to make it a little easier to ask, a little easier to offer, and a little easier for trust to travel.
 
 ## What it does
 
-- lets a member ask for help or offer what they can give;
-- keeps completed mutual aid distinct from a future intention;
-- records circle-owned mutual credit as a shared memory, not a personal score;
-- lets someone leave a “good card” of appreciation without turning recognition into payment;
-- gives each community its own boundary, references, people, and rules.
+### 1. Circles
+
+A circle is a small social boundary where people, context and shared rules are known. Different groups can define their own references and rituals:
+
+- a traveling exchange circle for hosting, cooking and local knowledge;
+- a study circle for feedback, co-learning and listening practice;
+- a living-together circle for meals, tools, rides and shared work.
+
+There is no single universal currency or rulebook.
+
+### 2. Needs and offers
+
+Members can say what they need or what they can offer in one sentence. An offer is not a contract, and posting an offer does not mean agreeing to help everyone. It is simply an invitation to start a conversation.
+
+### 3. Mutual credit
+
+When a real exchange has already happened, the people involved can add it to their circle's shared record. Mutual credit makes one movement visible: what someone has contributed to the community, and what they have received from it.
+
+It is not a debt between two people, a bank loan, a score, or a measure of personal worth. A balance simply describes how care and contribution have flowed through the circle over time. Unfinished plans do not change the record.
+
+### 4. Care badges
+
+A care badge is a small commemorative badge of appreciation, carrying a short story from the person who received help. It does not create credit, payment, a ranking, or an obligation to repay. It gives visible language to care that would otherwise disappear, and it can travel with a person across circles.
+
+## How one moment flows
+
+1. **Ask or offer.** Someone says one sentence in the language they already use with people they know.
+2. **Help happens in real life.** The conversation continues in person or in an existing chat; Flow Circle does not replace the relationship.
+3. **Remember it, if useful.** The people involved can record a completed exchange, or leave it unrecorded. Both are valid.
+4. **Let trust travel.** Circle credit can circulate inside a circle. A care badge can help a person be recognized in another circle.
 
 ## Design principles
 
-- **You can ask.** Needing help is not a failure.
-- **You can say no.** Refusal carries no penalty.
-- **You can leave it unrecorded.** Care does not need to become data to be real.
-- **Recognition is not payment.** Good cards never become money, points, or rankings.
-- **Circles make their own rules.** There is no universal currency or rulebook.
+- **You can ask.** Needing help is not a failure or a debt.
+- **You can say no.** Refusal carries no penalty and requires no explanation.
+- **You can leave it unrecorded.** Not all care needs to become data to be real.
+- **You can correct the story.** People involved can question, change or withdraw a record.
+- **Recognition is not payment.** Care badges never become money, points or rankings.
+- **Circles make their own rules.** A community decides what its references mean and where its boundaries are.
+
+## What is in this prototype
+
+This folder contains a self-contained, English-only presentation site for the Flow Circle hackathon submission. It includes:
+
+- a visual explanation of the problem and product idea;
+- the four core objects: circles, needs/offers, mutual credit and care badges;
+- an illustrated four-step exchange loop;
+- three example circles with different contexts and rules;
+- a small interactive activity feed with Needs, Offers and Care badges filters;
+- responsive layouts for desktop and mobile;
+- a clear static boundary: no accounts, no backend and no data writes.
+
+## Live versions
+
+- **Actual runnable product (Chinese):** [liudong-circle-demo.helloworld-zoey.chatgpt.site](https://liudong-circle-demo.helloworld-zoey.chatgpt.site/). This is the working product with its database and application flows.
+- **Source of truth:** the parent project’s [`main` branch](https://github.com/Ciaoye/community-currency/tree/main).
+- **English static Devpost preview:** [flow-circle-demo.helloworld-zoey.chatgpt.site/demo.html](https://flow-circle-demo.helloworld-zoey.chatgpt.site/demo.html). It is a safe, English-only walkthrough for reviewers, not a translated production deployment and not connected to the backend.
 
 ## How Codex & GPT-5.6 were used
 
-Codex with GPT-5.6 was a research-and-making partner throughout this project. We began by studying existing community-currency practices and interviewing stakeholders in communities this could serve. Together, those materials became the project's needs, principles, case notes, and product documents.
+Codex with GPT-5.6 was a research-and-making partner throughout the project. We began by studying how existing community currencies work and by interviewing stakeholders in the communities this could serve. Together, those materials became the project’s needs, principles, case notes, and product documents.
 
-From that core, Codex & GPT-5.6 helped translate the work into a design language and prototype directions, build and deploy an early static test page, and shape the English Devpost preview. The AI did not decide what a community should value; it helped make the research, boundaries, and design choices legible and testable.
+From that core, Codex & GPT-5.6 helped turn the ideas into a design language and prototype directions, build and deploy an early static test page, and shape this English Devpost preview. The live Chinese product is now moving toward backend-supported testing. The AI did not decide what a community should value; it helped make the research, boundaries, and design choices legible and testable.
 
-## Repository scope
+## Elevator pitch
 
-This is a one-off public repository for the Devpost submission, but it contains the complete English static website source and assets. It does not use or require a separate local Git checkout.
+### Short tagline
+
+**A community memory layer that keeps care, skills, and trust moving.**
+
+### Longer version
+
+**Flow Circle is a lightweight community memory layer that helps people ask for help, offer what they can, and remember real acts of care — without turning relationships into a marketplace or a leaderboard.**
+
+## Run locally
+
+Open `index.html` directly, or serve this folder with any static server:
+
+```bash
+python -m http.server 4173
+```
+
+Then visit `http://localhost:4173`.
+
+## Scope and publishing
+
+This is a static presentation prototype, not the backend application. It intentionally stays independent so the idea can be shown safely and clearly at a hackathon.
+
+The folder is ignored by the parent repository’s `.gitignore`, so it is not included in the project’s GitHub sync. Publish this folder separately as a static site or upload screenshots from it to Devpost.
