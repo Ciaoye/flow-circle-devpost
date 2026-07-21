@@ -14,6 +14,14 @@ Flow Circle helps a community remember what is already moving through it. A pers
 
 The goal is not to make every act of care measurable. The goal is to make it a little easier to ask, a little easier to offer, and a little easier for trust to travel.
 
+## Inspiration
+
+I practice non-consumption: swapping instead of buying, creating instead of consuming, and looking for surplus resources and value already around us. My events, consultations, and stays have often moved through direct exchange — but mostly between two people. When there is no immediate reciprocal match, an exchange can remain unresolved, even when both people are willing.
+
+I wanted the exchange relationships already around me to become visible as a network: people connected through me should be able to find, trust, and support one another too. This is also a “Don’t Do It Yourself” experiment: a request can be a wish and an invitation to co-create, not a purchase order.
+
+Flow Circle also makes space to notice invisible labor and small acts of care. It must not turn them into piecework, a ranking, or a claim on anyone’s time. Care badges are recognition, not payment; mutual credit records how contribution and receipt move through a circle, not a personal debt. The test is simple: can it make asking easier without making anyone harder to refuse, compare, or consume?
+
 ## What it does
 
 ### 1. Circles
@@ -84,11 +92,11 @@ From that core, Codex & GPT-5.6 helped turn the ideas into a design language and
 
 ### Short tagline
 
-**A community memory layer that keeps care, skills, and trust moving.**
+**A gentle exchange circle where care is seen and trust can travel.**
 
 ### Longer version
 
-**Flow Circle is a lightweight community memory layer that helps people ask for help, offer what they can, and remember real acts of care — without turning relationships into a marketplace or a leaderboard.**
+**Flow Circle helps existing exchanges become a visible circle: people can ask for help, offer what they can, and let trust travel beyond a one-to-one match — without turning relationships, kindness, or invisible labor into a marketplace, a leaderboard, or piecework.**
 
 ## Run locally
 
