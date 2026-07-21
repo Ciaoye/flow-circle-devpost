@@ -8,7 +8,7 @@ let intent = 'record';
 let toastTimer;
 
 const circleNames = { all: 'All circles', wayfarers: "Wayfarers' Exchange", human: 'Being Human Study', longtan: 'Longtan Commons' };
-const circles = { wayfarers: { short:'W', balance:'+28', currency:'bubbles', reference:'One hosted night · about 10 bubbles', role:'Traveling hosts', color:'pink' }, human: { short:'H', balance:'-6', currency:'human points', reference:'One generous review · about 5 points', role:'Learning together', color:'yellow' }, longtan: { short:'L', balance:'+12', currency:'meal tickets', reference:'One family meal · about 4 tickets', role:'Living together', color:'blue' } };
+const circles = { wayfarers: { short:'W', balance:'+28', currency:'circle credits', reference:'One hosted night · about 10 circle credits', role:'Traveling hosts', color:'pink' }, human: { short:'H', balance:'-6', currency:'circle credits', reference:'One generous review · about 5 circle credits', role:'Learning together', color:'yellow' }, longtan: { short:'L', balance:'+12', currency:'circle credits', reference:'One family meal · about 4 circle credits', role:'Living together', color:'blue' } };
 
 function avatar(letter, color='yellow', face='wave', small=true) { return `<span class="character ${small ? 'character-small ' : ''}character-${color} face-${face}"><i class="character-hair"></i><i class="character-eyes">◕ ◕</i><i class="character-smile">⌄</i><b>${letter}</b></span>`; }
 function pill(label, color='cream') { return `<span class="pill pill-${color}">${label}</span>`; }
@@ -18,9 +18,9 @@ function title(eyebrow, heading, action='Filter · 7') { return `<div class="sec
 const posts = [
   {kind:'offer', color:'green', letter:'A', name:'Ash', role:'Repair player', badge:'I can offer', text:'This week I can help repair small appliances, and we can learn how to fix them together.', tags:['small appliances','make together'], meta:"Wayfarers' Exchange · Hangzhou"},
   {kind:'need', color:'pink', letter:'M', name:'Mili', role:'Table host', badge:'I am looking for', text:'On Thursday night, I am looking for someone to review the introduction for my next gathering.', tags:['30 minutes','copy'], meta:'Being Human Study · Online'},
-  {kind:'trade', color:'yellow', letter:'W', name:'Wang → Shing', role:'Visible inside the circle', badge:'Exchange completed', text:'I stayed in Xiamen for one night. We talked until midnight and shared breakfast the next day.', tags:['hosting','travel'], meta:"Wayfarers' Exchange · 10 bubbles"},
+  {kind:'trade', color:'yellow', letter:'W', name:'Wang → Shing', role:'Visible inside the circle', badge:'Exchange completed', text:'I stayed in Xiamen for one night. We talked until midnight and shared breakfast the next day.', tags:['hosting','travel'], meta:"Wayfarers' Exchange · 10 circle credits"},
   {kind:'mystery', color:'blue', letter:'?', name:'A mutual-aid moment happened', role:'Identity and story are hidden', badge:'Private record', text:'The people involved chose to keep the care and its details private.', tags:['care'], meta:'Longtan Commons · 8 meal tickets'},
-  {kind:'card', color:'coral', letter:'A', name:'Tai → Ash', role:'Cross-circle recognition', badge:'Good card', text:'During the rain, Ash quietly fixed the shared kitchen leak and showed two others how to do it.', tags:['shared labor','teaching'], meta:'July 12 · seen with care'},
+  {kind:'card', color:'coral', letter:'A', name:'Tai → Ash', role:'Cross-circle recognition', badge:'Care badge', text:'During the rain, Ash quietly fixed the shared kitchen leak and showed two others how to do it.', tags:['shared labor','teaching'], meta:'July 12 · seen with care'},
   {kind:'offer', color:'green', letter:'N', name:'Anan', role:'Listening practice', badge:'I can offer', text:'I have one hour this weekend to sit with whatever has been difficult to say clearly.', tags:['listening','weekend'], meta:'Being Human Study · Online'}
 ];
 
@@ -43,4 +43,33 @@ function showDraft() { const copy={record:['Mutual exchange completed · 10 bubb
 
 app.addEventListener('click',event=>{ const target=event.target.closest('button'); if(!target) return; if(target.dataset.view){ view=target.dataset.view; render(); return; } if(target.dataset.circle){ circle=target.dataset.circle; if(view!=='circles'&&view!=='profile') view='feed'; render(); return; } const action=target.dataset.action; if(action==='say'||action==='card'){ if(action==='card') intent='card'; openComposer(); if(action==='card') updateIntent('card'); return; } if(action==='close'){ modal.hidden=true; return; } if(action==='draft'){ showDraft(); return; } if(action==='back'){ openComposer(); updateIntent(intent); return; } if(action==='confirm'){ modal.hidden=true; showToast(intent==='card'?'Good card added to the static passport.':'Draft confirmed in this static demo.'); return; } if(action==='share'){ showToast('Share-card preview generated for this static demo.'); return; } if(action==='filter'){ showToast('Filter changed in this static demo.'); return; } if(action==='details'||action==='intro'||action==='rules'||action==='invite'||action==='preview'){ showToast('This interaction is represented in the full product flow.'); } });
 modal.addEventListener('click',event=>{ if(event.target===modal){ modal.hidden=true; return; } const target=event.target.closest('button'); if(!target) return; if(target.dataset.intent){ updateIntent(target.dataset.intent); return; } const action=target.dataset.action; if(action==='close'){ modal.hidden=true; return; } if(action==='draft'){ showDraft(); return; } if(action==='back'){ openComposer(); updateIntent(intent); return; } if(action==='confirm'){ modal.hidden=true; showToast(intent==='card'?'Good card added to the static passport.':'Draft confirmed in this static demo.'); } });
+function rewriteTerminology(root) {
+  const replacements = [
+    ['Good cards', 'Care badges'],
+    ['good cards', 'care badges'],
+    ['Good card', 'Care badge'],
+    ['good card', 'care badge'],
+    ['good-card', 'care-badge'],
+    ['bubbles', 'circle credits'],
+    ['meal tickets', 'circle credits'],
+    ['human points', 'circle credits']
+  ];
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach((node) => {
+    if (node.parentElement?.closest('script, style')) return;
+    let text = node.nodeValue;
+    replacements.forEach(([from, to]) => { text = text.replaceAll(from, to); });
+    if (text !== node.nodeValue) node.nodeValue = text;
+  });
+}
+
+const terminologyObserver = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => mutation.addedNodes.forEach((node) => {
+    if (node.nodeType === Node.ELEMENT_NODE) rewriteTerminology(node);
+  }));
+});
+terminologyObserver.observe(document.body, { childList: true, subtree: true });
 render();
+rewriteTerminology(document.body);
