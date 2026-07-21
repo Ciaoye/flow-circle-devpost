@@ -6,6 +6,7 @@ const toast = document.querySelector('[data-toast]');
 let view = 'feed';
 let circle = 'all';
 let intent = 'record';
+let activeFilter = 'all';
 let toastTimer;
 
 const circleNames = {
@@ -22,12 +23,12 @@ const circles = {
 };
 
 const posts = [
-  { kind: 'offer', color: 'green', letter: 'A', name: 'Ash', role: 'Repair player', badge: 'I can offer', text: 'This week I can help repair small appliances, and we can learn how to fix them together.', tags: ['small appliances', 'make together'], meta: "Wayfarers' Exchange - Hangzhou" },
-  { kind: 'need', color: 'pink', letter: 'M', name: 'Mili', role: 'Table host', badge: 'I am looking for', text: 'On Thursday night, I am looking for someone to review the introduction for my next gathering.', tags: ['30 minutes', 'copy'], meta: 'Being Human Study - Online' },
-  { kind: 'trade', color: 'yellow', letter: 'W', name: 'Wang to Shing', role: 'Visible inside the circle', badge: 'Exchange completed', text: 'I stayed in Xiamen for one night. We talked until midnight and shared breakfast the next day.', tags: ['hosting', 'travel'], meta: "Wayfarers' Exchange - 10 circle credits" },
-  { kind: 'mystery', color: 'blue', letter: '?', name: 'A mutual-aid moment happened', role: 'Identity and story are hidden', badge: 'Private record', text: 'The people involved chose to keep the care and its details private.', tags: ['care'], meta: 'Longtan Commons - 8 circle credits' },
-  { kind: 'card', color: 'coral', letter: 'A', name: 'Tai to Ash', role: 'Cross-circle recognition', badge: 'Care badge', text: 'During the rain, Ash quietly fixed the shared kitchen leak and showed two others how to do it.', tags: ['shared labor', 'teaching'], meta: 'July 12 - seen with care' },
-  { kind: 'offer', color: 'green', letter: 'N', name: 'Anan', role: 'Listening practice', badge: 'I can offer', text: 'I have one hour this weekend to sit with whatever has been difficult to say clearly.', tags: ['listening', 'weekend'], meta: 'Being Human Study - Online' }
+  { circle: 'wayfarers', kind: 'offer', color: 'green', letter: 'A', name: 'Ash', role: 'Repair player', badge: 'I can offer', text: 'This week I can help repair small appliances, and we can learn how to fix them together.', tags: ['small appliances', 'make together'], meta: "Wayfarers' Exchange - Hangzhou" },
+  { circle: 'human', kind: 'need', color: 'pink', letter: 'M', name: 'Mili', role: 'Table host', badge: 'I am looking for', text: 'On Thursday night, I am looking for someone to review the introduction for my next gathering.', tags: ['30 minutes', 'copy'], meta: 'Being Human Study - Online' },
+  { circle: 'wayfarers', kind: 'trade', color: 'yellow', letter: 'W', name: 'Wang to Shing', role: 'Visible inside the circle', badge: 'Exchange completed', text: 'I stayed in Xiamen for one night. We talked until midnight and shared breakfast the next day.', tags: ['hosting', 'travel'], meta: "Wayfarers' Exchange - 10 circle credits" },
+  { circle: 'longtan', kind: 'mystery', color: 'blue', letter: '?', name: 'A mutual-aid moment happened', role: 'Identity and story are hidden', badge: 'Private record', text: 'The people involved chose to keep the care and its details private.', tags: ['care'], meta: 'Longtan Commons - 8 circle credits' },
+  { circle: 'longtan', kind: 'card', color: 'coral', letter: 'A', name: 'Tai to Ash', role: 'Cross-circle recognition', badge: 'Care badge', text: 'During the rain, Ash quietly fixed the shared kitchen leak and showed two others how to do it.', tags: ['shared labor', 'teaching'], meta: 'July 12 - seen with care' },
+  { circle: 'human', kind: 'offer', color: 'green', letter: 'N', name: 'Anan', role: 'Listening practice', badge: 'I can offer', text: 'I have one hour this weekend to sit with whatever has been difficult to say clearly.', tags: ['listening', 'weekend'], meta: 'Being Human Study - Online' }
 ];
 
 function avatar(letter, color = 'yellow', face = 'wave', small = true) {
@@ -49,19 +50,30 @@ function showToast(message) {
   toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
 }
 
+function filterButtons(kinds = ['all', 'need', 'offer', 'card']) {
+  const labels = { all: 'All', need: 'Needs', offer: 'Offers', card: 'Care badges', mystery: 'Private records' };
+  return `<div class="filter-row" aria-label="Filter activity">${kinds.map((kind) => `<button class="${activeFilter === kind ? 'active' : ''}" data-filter="${kind}">${labels[kind]}</button>`).join('')}</div>`;
+}
+
+function showInfo(title, copy, actionLabel = 'Close') {
+  modal.hidden = false;
+  modal.innerHTML = `<section class="sheet"><button class="close-button" data-action="close">x</button><span class="sheet-kicker">FLOW CIRCLE - STATIC DEMO</span><h2>${title}</h2><div class="draft-card"><p>${copy}</p></div><div class="sheet-actions"><button class="confirm" data-action="close">${actionLabel}</button></div></section>`;
+}
+
 function feedCard(post) {
   return `<article class="feed-card feed-${post.kind}"><header><button class="feed-person" data-action="profile">${avatar(post.letter, post.color, post.kind === 'mystery' ? 'bob' : 'wave')}<span><b>${post.name}</b><small>${post.role}</small></span></button>${pill(post.badge, post.color)}</header><div class="feed-text">${post.text}</div><div class="chip-row">${post.tags.map((tag) => `<span>#${tag}</span>`).join('')}</div><footer><span>${post.meta}</span><span><button data-action="details">Details</button> <button data-action="share">Share &rarr;</button></span></footer></article>`;
 }
 
 function renderFeed() {
   const scope = circle === 'all' ? 'All circles' : circleNames[circle];
-  const visiblePosts = circle === 'all' ? posts : posts;
-  return `<section class="agent-hero"><div class="hero-decor decor-grid"></div><div class="hero-decor decor-square"></div><div class="hero-decor decor-circle"></div><div class="agent-orb"><i class="agent-antenna"></i><span>o_o</span><b>Bubble</b></div><div class="agent-copy">${pill('ONLINE - BUBBLE ASSISTANT')}<h2>Say one thing,<br />let mutual aid move.</h2><p>I will turn it into a draft you can check and edit.</p></div><button class="speak-button" data-action="say"><span>+</span><b>Say a thing</b><small>Exchange - need - offer - care badge</small></button></section><section class="scope-banner"><span>${circle === 'all' ? 'COMBINED ACTIVITY' : 'CURRENT CIRCLE'}</span><b>${scope}</b><small>${circle === 'all' ? 7 : 3} moments match this view</small></section><section class="stats-grid" aria-label="Activity overview"><button class="stat-card stat-yellow" data-view="profile"><span>${circle === 'all' ? 'circles joined' : 'current balance'}</span><strong>${circle === 'all' ? '3' : circles[circle].balance}</strong><small>${circle === 'all' ? 'each circle has its own account' : 'circle credits'}</small></button><button class="stat-card stat-pink" data-view="profile"><span>I have given</span><strong>${circle === 'all' ? '136' : '86'}</strong><small>community memory, not a ranking</small></button><button class="stat-card stat-blue" data-view="profile"><span>care badges</span><strong>0</strong><small>they travel across circles</small></button></section>${sectionTitle('LIVE FROM THE CIRCLE', `${scope} - All activity`)}<div class="feed-list">${visiblePosts.map(feedCard).join('')}</div>`;
+  const scopedPosts = circle === 'all' ? posts : posts.filter((post) => post.circle === circle);
+  const visiblePosts = activeFilter === 'all' ? scopedPosts : scopedPosts.filter((post) => post.kind === activeFilter);
+  return `<section class="agent-hero"><div class="hero-decor decor-grid"></div><div class="hero-decor decor-square"></div><div class="hero-decor decor-circle"></div><div class="agent-orb"><i class="agent-antenna"></i><span>o_o</span><b>Bubble</b></div><div class="agent-copy">${pill('ONLINE - BUBBLE ASSISTANT')}<h2>Say one thing,<br />let mutual aid move.</h2><p>I will turn it into a draft you can check and edit.</p></div><button class="speak-button" data-action="say"><span>+</span><b>Say a thing</b><small>Exchange - need - offer - care badge</small></button></section><section class="scope-banner"><span>${circle === 'all' ? 'COMBINED ACTIVITY' : 'CURRENT CIRCLE'}</span><b>${scope}</b><small>${visiblePosts.length} moments match this view</small></section><section class="stats-grid" aria-label="Activity overview"><button class="stat-card stat-yellow" data-view="profile"><span>${circle === 'all' ? 'circles joined' : 'current balance'}</span><strong>${circle === 'all' ? '3' : circles[circle].balance}</strong><small>${circle === 'all' ? 'each circle has its own account' : 'circle credits'}</small></button><button class="stat-card stat-pink" data-view="profile"><span>I have given</span><strong>${circle === 'all' ? '136' : '86'}</strong><small>community memory, not a ranking</small></button><button class="stat-card stat-blue" data-view="profile"><span>care badges</span><strong>0</strong><small>they travel across circles</small></button></section>${sectionTitle('LIVE FROM THE CIRCLE', `${scope} - activity`)}${filterButtons()}<div class="feed-list">${visiblePosts.map(feedCard).join('') || '<p class="result-note">Nothing matches this filter yet.</p>'}</div>`;
 }
 
 function renderDiscover() {
-  const cards = posts.filter((post) => post.kind === 'need' || post.kind === 'offer');
-  return `<section class="page-hero discover-hero"><div>${pill('CROSS-CIRCLE DISCOVERY', 'pink')}<h2>Someone is looking,<br />and someone can give.</h2><p>Seeing an offer does not mean someone owes you a yes. Start with a question.</p></div><button data-action="say">+ Publish</button></section><div class="filter-row"><button class="active" data-action="filter">All</button><button data-action="filter">Needs</button><button data-action="filter">Offers</button><button data-action="filter">Nearby</button></div><p class="result-note">6 active needs and offers</p><div class="feed-list">${cards.map(feedCard).join('')}</div>`;
+  const cards = posts.filter((post) => (post.kind === 'need' || post.kind === 'offer') && (activeFilter === 'all' || post.kind === activeFilter));
+  return `<section class="page-hero discover-hero"><div>${pill('CROSS-CIRCLE DISCOVERY', 'pink')}<h2>Someone is looking,<br />and someone can give.</h2><p>Seeing an offer does not mean someone owes you a yes. Start with a question.</p></div><button data-action="say">+ Publish</button></section>${filterButtons(['all', 'need', 'offer'])}<p class="result-note">${cards.length} active needs and offers</p><div class="feed-list">${cards.map(feedCard).join('') || '<p class="result-note">Nothing matches this filter yet.</p>'}</div>`;
 }
 
 function renderCircles() {
@@ -116,16 +128,28 @@ function handleAction(action) {
   if (action === 'draft') { showDraft(); return; }
   if (action === 'back') { openComposer(); return; }
   if (action === 'confirm') { modal.hidden = true; showToast(intent === 'card' ? 'Care badge added to the static passport.' : 'Draft confirmed in this static demo.'); return; }
-  if (action === 'share') { showToast('Share-card preview generated for this static demo.'); return; }
-  if (action === 'filter') { showToast('Filter changed in this static demo.'); return; }
-  if (action) showToast('This interaction is represented in the full product flow.');
+  if (action === 'profile') { view = 'profile'; render(); return; }
+  if (action === 'details') { showInfo('A remembered moment', 'This record can include the story, the circle it belongs to, who can see it, and a correction path. In the full product, the people involved can revise or withdraw it.'); return; }
+  if (action === 'share') { showInfo('Share card preview', 'A share card carries a short care story and its circle context. It does not expose private account balances.'); return; }
+  if (action === 'intro') { showInfo('Circle introduction', 'This circle has its own people, references and rules. Circle credits are a shared record of contributions and receipts - never a personal debt score.'); return; }
+  if (action === 'rules') { showInfo('How this circle keeps records', 'References help people talk about scale, but they are not fixed prices. A completed moment can be recorded, corrected, or left unrecorded.'); return; }
+  if (action === 'invite') { showInfo('Invite a member', 'In the live product, a circle invitation introduces the shared boundary and lets a new member decide whether to join.'); return; }
+  if (action === 'preview') { showInfo('New circle preview', 'Weekend Makers’ Table would start with a small group, its own visibility rules, and a shared record of care.'); return; }
+  if (action === 'filter') {
+    if (view !== 'feed' && view !== 'discover') { showInfo('Archive filters', 'In the live product, this opens filters for visibility, circle and record type. This static demo keeps the full archive visible.'); return; }
+    activeFilter = activeFilter === 'all' ? 'need' : activeFilter === 'need' ? 'offer' : activeFilter === 'offer' ? 'card' : 'all';
+    render();
+    return;
+  }
+  if (action) showInfo('Static demo boundary', 'This interaction is shown as a reviewable static flow. The live Chinese product contains the connected application flow.');
 }
 
 app.addEventListener('click', (event) => {
   const target = event.target.closest('button');
   if (!target) return;
-  if (target.dataset.view) { view = target.dataset.view; render(); return; }
+  if (target.dataset.view) { view = target.dataset.view; if (view === 'discover' && !['all', 'need', 'offer'].includes(activeFilter)) activeFilter = 'all'; render(); return; }
   if (target.dataset.circle) { circle = target.dataset.circle; if (view !== 'circles' && view !== 'profile') view = 'feed'; render(); return; }
+  if (target.dataset.filter) { activeFilter = target.dataset.filter; render(); return; }
   handleAction(target.dataset.action);
 });
 
