@@ -1,0 +1,12 @@
+{
+  "name": "flow-circle-devpost-static-demo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite"
+  },
+  "devDependencies": {
+    "vite": "^8.0.13"
+  }
+}
