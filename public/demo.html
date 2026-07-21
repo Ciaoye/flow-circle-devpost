@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#fbbb15" />
+    <meta name="description" content="An English static product demo for Flow Circle." />
+    <title>Flow Circle — Interactive Demo</title>
+    <link rel="stylesheet" href="/demo.css" />
+  </head>
+  <body>
+    <main class="world-shell" data-app>
+      <aside class="circle-dock" aria-label="My circle map">
+        <a class="brand-mark" href="/" aria-label="Back to Flow Circle presentation"><span>Flow<br />Circle</span><b>FLOW CIRCLE · THE IDEA →</b></a>
+        <div class="dock-heading"><span>My map</span><b>03</b></div>
+        <button class="dock-all active" data-circle="all"><span>◎</span><b>All circle activity</b><strong>7</strong></button>
+        <div class="dock-list">
+          <button class="dock-circle dock-pink" data-circle="wayfarers"><span class="character character-small character-pink face-wave"><i class="character-hair"></i><i class="character-eyes">◕ ◕</i><i class="character-smile">⌄</i><b>W</b></span><span><b>Wayfarers' Exchange</b><small>Traveling host</small></span><strong>+28</strong></button>
+          <button class="dock-circle dock-yellow" data-circle="human"><span class="character character-small face-bob"><i class="character-hair"></i><i class="character-eyes">• •</i><i class="character-smile">⌣</i><b>H</b></span><span><b>Being Human Study</b><small>Learning host</small></span><strong>-6</strong></button>
+          <button class="dock-circle dock-blue" data-circle="longtan"><span class="character character-small character-blue face-leaf"><i class="character-hair"></i><i class="character-eyes">˘ ˘</i><i class="character-smile">⌣</i><b>L</b></span><span><b>Longtan Commons</b><small>Temporary villager</small></span><strong>+12</strong></button>
+        </div>
+        <button class="new-circle" data-view="create"><b>＋</b><span>Create a new circle</span></button>
+        <p class="dock-note"><strong>English static preview</strong> for Devpost. The actual runnable product is Chinese and lives on the <a href="https://liudong-circle-demo.helloworld-zoey.chatgpt.site/" target="_blank" rel="noreferrer">live app ↗</a>.</p>
+      </aside>
+
+      <section class="phone-stage">
+        <div class="app-frame">
+          <header class="topbar"><a class="brand-mini" href="/" aria-label="Back to Flow Circle presentation"><span>F</span><i></i></a><div><p data-header-kicker>MY CIRCLE ACTIVITY</p><h1 data-header-title>Hello, Shing!</h1></div><button class="avatar-button" data-view="profile" aria-label="Open my profile"><span class="character character-yellow face-wave"><i class="character-hair"></i><i class="character-eyes">◕ ◕</i><i class="character-smile">⌄</i><b>S</b></span></button></header>
+          <nav class="circle-switcher" aria-label="Switch activity scope"><button class="all-switch selected" data-circle="all"><span class="circle-dot dot-all"></span><span>All circles</span><b>7</b></button><button data-circle="wayfarers"><span class="circle-dot dot-pink"></span><span>Wayfarers</span><b>+28</b></button><button data-circle="human"><span class="circle-dot dot-yellow"></span><span>Being Human</span><b>-6</b></button><button data-circle="longtan"><span class="circle-dot dot-blue"></span><span>Longtan Commons</span><b>+12</b></button></nav>
+          <div class="view-content" data-content></div>
+          <nav class="bottom-nav" aria-label="Primary navigation"><button class="active" data-view="feed"><span class="nav-icon">⌂</span><small>Activity</small></button><button data-view="discover"><span class="nav-icon">◇</span><small>Discover</small></button><button class="compose-slot" data-action="say" aria-label="Say a thing"><span class="compose-orb">●</span><small>Say a thing</small></button><button data-view="circles"><span class="nav-icon">▦</span><small>Circles</small></button><button data-view="profile"><span class="nav-icon">☺</span><small>My profile</small></button></nav>
+        </div>
+      </section>
+
+      <aside class="world-panel" aria-label="Circle overview">
+        <section class="world-card world-card-main"><span class="world-kicker">TODAY IN YOUR CIRCLES</span><h2>Today, <em>7 things</em><br />are moving.</h2><div class="world-stats"><span><b>4</b> needs / offers</span><span><b>2</b> exchanges completed</span><span><b>1</b> good card</span></div><p class="build-credit"><b>BUILT WITH CODEX &amp; GPT-5.6</b><span>Community-currency research and interviews → project docs → design prototype → this static preview.</span></p></section>
+        <button class="world-card value-card" data-view="circles"><span class="world-kicker">HOW THIS CIRCLE ESTIMATES</span><h3>Wayfarers' Exchange</h3><div><span>One hosted night</span><b>about 10 bubbles</b></div><div><span>One family meal</span><b>about 4 bubbles</b></div><p>These are conversation references, not fixed prices. Open the rules to see the whole agreement.</p></button>
+        <section class="world-rule"><b>You can ask.<br />You can say no.</b><span>NO PRESSURE · NO RANKING</span></section>
+      </aside>
+    </main>
+
+    <div class="modal-backdrop" data-modal hidden></div>
+    <div class="toast" data-toast role="status" aria-live="polite"></div>
+    <script src="/demo.js"></script>
+  </body>
+</html>
