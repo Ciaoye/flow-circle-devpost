@@ -27,7 +27,7 @@ function showToast(message) {
 }
 
 recordButton.addEventListener('click', () => {
-  showToast('In the real product, this would become a draft for you to check. This page stays static.');
+  window.location.assign('/demo.html');
 });
 
 document.querySelector('.round-button').addEventListener('click', () => {
